@@ -1,13 +1,11 @@
 import React from 'react';
 import {View,Text} from 'react-native';
+import {WebView} from 'react-native-webview'
 
 const HomeScreen = () =>{
-    return (
-        <View>
-            <Text style={{fontSize:24, alignSelf: 'center'}}>
-                HOME FUNCIONA
-            </Text>
-        </View>
-    )
+    return     <WebView 
+        source = {{uri:'https://shoppalclub.com/htmlpage.html'}}
+        onError = {(event => alert(`WebView error ${event.nativeEvent.description}`))}
+    />
 }
 export default HomeScreen

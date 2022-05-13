@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView } from 'react-native'
+import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native'
 import Logo from '../../../assets/imgs/spclogo.png'
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
@@ -31,14 +31,27 @@ const SignInScreen = () => {
                     let str = res.data;
                     var splitArr = str.split("::");
                     var IdAccount = splitArr[0];
-                    var IdEntity = spliArr[1];
+                    var IdEntity = splitArr[1];
                     var AccountActivationPending = 0;
                     if (splitArr.length > 5) {
                         AccountActivationPending = parseInt(splitArr[5]);
+                        console.log('AccountActivationPending = '+AccountActivationPending)
                     }
-                    if(AccountActivationPending = 5)
+                    if(AccountActivationPending === 5)
                     {
-                        console.warn('Aún no has completado la activación de tu cuenta.Por favor revisa el correo que te enviamos.')
+                        Alert.alert(
+                            "Activacion Requerida",
+                            "Aún no has completado la activación de tu cuenta.Por favor revisa el correo que te enviamos.",
+                            [
+                              {
+                                text: "Cancel",
+                                onPress: () => console.log("Cancel Pressed"),
+                                style: "cancel"
+                              },
+                              { text: "OK", onPress: () => console.log("OK Pressed") }
+                            ]
+                          );
+                      
                     }
                     else{
                         navigation.navigate('HomeScreen');
