@@ -6,18 +6,23 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import ForgotPasswordScreen from '../screens/ForgotPasswordScreen/ForgotPasswordScreen';
 import HomeScreen from '../screens/HomeScreen'
+import { UserContextProvider } from '../../context/userContext';
 
 const Stack = createNativeStackNavigator();
 const Navigation = () => {
     return (
+
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{headerShown: false}}>
-                <Stack.Screen name="SignIn" component={SignInScreen} />
-                <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-                <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
-                <Stack.Screen name ="HomeScreen" component ={HomeScreen}/>
-           </Stack.Navigator>
+            <UserContextProvider>
+                <Stack.Navigator screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="SignIn" component={SignInScreen} />
+                    <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+                    <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
+                    <Stack.Screen name="HomeScreen" component={HomeScreen} />
+                </Stack.Navigator>
+            </UserContextProvider>
         </NavigationContainer>
+
     )
 }
 

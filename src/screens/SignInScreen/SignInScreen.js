@@ -4,64 +4,60 @@ import Logo from '../../../assets/imgs/spclogo.png'
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
 import { useNavigation } from '@react-navigation/native'
-import env from '../../../env'
+import { UserContext } from '././../../../context/userContext'
 import axios from 'axios'
+import env from '../../../env';
+const { URLAPI } = env;
+
 
 
 const SignInScreen = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('antjazl@gmail.com');
+    const [password, setPassword] = useState('Luch!n159');
     const { height } = useWindowDimensions();
     const navigation = useNavigation();
-    const { URLAPI } = env;
-    console.log(URLAPI);
+
+    const { user, login, logout } = React.useContext(UserContext);
+
 
     const onSignInPressed = () => {
-        console.log('SIGININ')
         var strurl = URLAPI + 'api/account.signin/' + username + "/" + password;
-        console.log("str " + strurl)
-        return axios.get(strurl)
+        axios.get(strurl)
             .then((res) => {
-                console.log(res.data)
+                //console.log(res.data)
                 if (res.data === 'false::false') {
                     console.warn('Datos Invalidos.');
                     setUsername('');
                     setPassword('')
                 } else {
                     let str = res.data;
+                    console.log(str);
                     var splitArr = str.split("::");
-                    var IdAccount = splitArr[0];
-                    var IdEntity = splitArr[1];
-                    var AccountActivationPending = 0;
-                    if (splitArr.length > 5) {
-                        AccountActivationPending = parseInt(splitArr[5]);
-                        console.log('AccountActivationPending = '+AccountActivationPending)
-                    }
-                    if(AccountActivationPending === 5)
-                    {
-                        Alert.alert(
-                            "Activacion Requerida",
-                            "Aún no has completado la activación de tu cuenta.Por favor revisa el correo que te enviamos.",
-                            [
-                              {
-                                text: "Cancel",
-                                onPress: () => console.log("Cancel Pressed"),
-                                style: "cancel"
-                              },
-                              { text: "OK", onPress: () => console.log("OK Pressed") }
-                            ]
-                          );
-                      
-                    }
-                    else{
-                        navigation.navigate('HomeScreen');
-                    }
+                    const entries = new Map([
+                        ['IdAccount', splitArr[0]],
+                        ['IdEntity', splitArr[1]],
+                        ['ClientName', splitArr[2]],
+                        ['ClientEmail', splitArr[3]],
+                        ['IsActive', splitArr[4]]
+                      ]);
+                      const obj = Object.fromEntries(entries);
+                      console.log('XXX: ' + JSON.stringify(obj))
+                       login(obj);
 
+                       navigation.navigate('HomeScreen')
+
+                       
+                    
+                      
 
                 }
             }).catch((error) => {
                 console.error(error);
             });
+            
+        
+        
+
     }
 
     const onForgotPasswordPressed = () => {
