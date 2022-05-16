@@ -39,24 +39,24 @@ const SignInScreen = () => {
                         ['ClientName', splitArr[2]],
                         ['ClientEmail', splitArr[3]],
                         ['IsActive', splitArr[4]]
-                      ]);
-                      const obj = Object.fromEntries(entries);
-                      console.log('XXX: ' + JSON.stringify(obj))
-                       login(obj);
+                    ]);
+                    const obj = Object.fromEntries(entries);
+                    console.log('XXX: ' + JSON.stringify(obj))
+                    login(obj);
 
-                       navigation.navigate('HomeScreen')
+                    navigation.navigate('HomeScreen')
 
-                       
-                    
-                      
+
+
+
 
                 }
             }).catch((error) => {
                 console.error(error);
             });
-            
-        
-        
+
+
+
 
     }
 

@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { UserContext } from '../../../context/userContext';
 import CustomWebView from '../../components/CustomWebView/CustomWebview';
+import CustomBrowser from '../../components/CustomBrowser/CustomBrowser';
 
 const Drawer = createDrawerNavigator();
 
@@ -14,15 +15,7 @@ const HomeScreen = () =>{
     const { user, login, logout } = React.useContext(UserContext);
 
     console.log('HOLA '+JSON.stringify(user));
-    return    (<Drawer.Navigator>
-
-    <Drawer.Screen name="Home">
-      {props => <CustomWebView {...props}  url={"https://shoppalclub.com/htmlpage.html"} />}
-    </Drawer.Screen>
-    <Drawer.Screen name="Profile">
-      {props => <CustomWebView {...props}  url={"https://google.com"} />}
-    </Drawer.Screen>
-    </Drawer.Navigator>
+    return    (<CustomBrowser></CustomBrowser>
 
     )
 }
