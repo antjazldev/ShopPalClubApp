@@ -6,8 +6,8 @@ import { WebView } from 'react-native-webview'
 
 const CustomBrowser = ({ navigation, route }) => {
 
-    console.log(route.params.mainUrl)
-    mainUrl = route.params.mainUrl;
+    const [mainUrl, setMainUrl] = useState(route.params.mainUrl);
+    
     state = {
         url: mainUrl,
         key: 1
@@ -42,7 +42,10 @@ const CustomBrowser = ({ navigation, route }) => {
             </View>
             <View style={styles.footer}>
                 <View style={styles.NavBar}>
-                    <Pressable onPress={() => setKey(key + 1)} style={styles.IconBehave}>
+                    <Pressable onPress={() => {
+                        console.log('Reseting url');
+                        setMainUrl('https://shoppalclub.com/htmlpage.html');
+                        }} style={styles.IconBehave}>
                         <Icon name="front-store" height='100%' width='25' color="#d5691b" />
                     </Pressable>
                     <Pressable onPress={() => {
