@@ -1,15 +1,16 @@
-import React, { Component, useRef, useState} from 'react';
+import React, { Component, useRef, useState } from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
 import Logo from '../../../assets/imgs/spclogo.png'
-import CustomWebView from '../CustomWebView/CustomWebview'
 import Icon from 'react-native-ico-material-design'
 import { WebView } from 'react-native-webview'
 
-const CustomBrowser=()=> {
-    mainUrl = "https://shoppalclub.com/htmlpage.html";
+const CustomBrowser = ({ navigation, route }) => {
+
+    console.log(route.params.mainUrl)
+    mainUrl = route.params.mainUrl;
     state = {
-        url: this.mainUrl,
-        key:1
+        url: mainUrl,
+        key: 1
     };
 
     const [key, setKey] = useState(1);
@@ -17,7 +18,7 @@ const CustomBrowser=()=> {
     let WebViewRef;
     goBack = () => {
         this.webview.goBack();
-      };
+    };
 
     return (
         <View style={styles.container}>
@@ -25,8 +26,8 @@ const CustomBrowser=()=> {
             <View style={styles.contentContainer}>
 
                 <WebView
-                     ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
-                     key={key}
+                    ref={WEBVIEW_REF => (WebViewRef = WEBVIEW_REF)}
+                    key={key}
                     source={{ uri: this.state.url }}
                     onLoad={
                         e => {

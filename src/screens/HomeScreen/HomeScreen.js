@@ -15,7 +15,7 @@ const HomeScreen = () =>{
     const { user, login, logout } = React.useContext(UserContext);
 
     console.log('HOLA '+JSON.stringify(user));
-    return    (<CustomBrowser></CustomBrowser>
+    return    (<CustomWebView></CustomWebView>
 
     )
 }
