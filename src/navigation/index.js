@@ -15,10 +15,10 @@ const Navigation = () => {
         <NavigationContainer>
             <UserContextProvider>
                 <Stack.Navigator screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="HomeScreen" component={HomeScreen}   options={{animation:'none'}}/>
                     <Stack.Screen name="SignIn" component={SignInScreen} />
                     <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
                     <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
-                    <Stack.Screen name="HomeScreen" component={HomeScreen}   options={{animation:'none'}}/>
                 </Stack.Navigator>
             </UserContextProvider>
         </NavigationContainer>

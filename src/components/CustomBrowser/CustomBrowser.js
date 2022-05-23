@@ -1,12 +1,15 @@
 import React, { Component, useRef, useState } from 'react';
-import { View, Text, Image, StyleSheet, Pressable } from 'react-native'
+import { View, Text, Alert, StyleSheet, Pressable } from 'react-native'
 import Logo from '../../../assets/imgs/spclogo.png'
 import Icon from 'react-native-ico-material-design'
 import { WebView } from 'react-native-webview'
-
+import { UserContext } from '../../../context/userContext';
 const CustomBrowser = ({ navigation, route }) => {
 
     const [mainUrl, setMainUrl] = useState(route.params.mainUrl);
+    const [canGoBack, setCanGoBack] = useState(false);
+    const [canGoForward, setCanGoForward] = useState(false);
+    const { user, login, logout } = React.useContext(UserContext);
     
     state = {
         url: mainUrl,
@@ -16,10 +19,52 @@ const CustomBrowser = ({ navigation, route }) => {
     const [key, setKey] = useState(1);
 
     let WebViewRef;
-    goBack = () => {
-        this.webview.goBack();
-    };
 
+      onNavigationStateChange = (navState) => {
+        this.setState({
+          canGoBack: navState.canGoBack
+        });
+      };
+
+      onBack = () => {
+        WebViewRef && WebViewRef.goBack();
+      }
+
+      onForward = () => {
+        WebViewRef && WebViewRef.goForward();
+      }
+
+      onAddToCart = () => {
+        if(Object.keys(user).length == 0)
+        {
+            Alert.alert(
+                "Inicia Sesion",
+                "Para poder añadir items a tu carrito por favor inicia sesión.",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+        }
+        else
+        {
+        }
+      }
+
+      onShowCart = () => {
+        if(Object.keys(user).length == 0)
+        {
+            Alert.alert(
+                "Inicia Sesion",
+                "Para poder ingresar a tu carrito de compras, por favor inica sesión.",
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
+        }
+        else
+        {
+        }
+      }
     return (
         <View style={styles.container}>
 
@@ -38,6 +83,11 @@ const CustomBrowser = ({ navigation, route }) => {
                     javaScriptEnabled={true}
                     onError={(event => alert(`WebView error ${event.nativeEvent.description}`))}
                     startInLoadingState={true}
+                    onNavigationStateChange={navState => {
+                        setCanGoBack(navState.canGoBack);
+                        setCanGoForward(navState.canGoForward);
+                        setMainUrl(navState.url);
+                      }}
                 />
             </View>
             <View style={styles.footer}>
@@ -53,16 +103,16 @@ const CustomBrowser = ({ navigation, route }) => {
                     }} style={styles.IconBehave}>
                         <Icon name="refresh-button-1" height='100%' width='25' color="#d5691b" />
                     </Pressable>
-                    <Pressable onPress={() => console.log('third')} style={styles.IconBehave}>
+                    <Pressable onPress={this.onBack.bind(this)} style={styles.IconBehave}>
                         <Icon name="left-arrow-key" height='100%' width='25' color="#d5691b" />
                     </Pressable>
-                    <Pressable onPress={() => console.log('Fourth')} style={styles.IconBehave}>
+                    <Pressable onPress={this.onForward.bind(this)} style={styles.IconBehave}>
                         <Icon name="keyboard-right-arrow-button-1" height='100%' width='25' color="#d5691b" />
                     </Pressable>
-                    <Pressable onPress={() => console.log('Fifth')} style={styles.IconBehave}>
+                    <Pressable onPress={this.onAddToCart.bind(this)} style={styles.IconBehave}>
                         <Icon name="add-plus-button" height='100%' width='25' color="#d5691b" />
                     </Pressable>
-                    <Pressable onPress={() => console.log('Sixth')} style={styles.IconBehave}>
+                    <Pressable onPress={this.onShowCart.bind(this)} style={styles.IconBehave}>
                         <Icon name="shopping-cart" height='100%' width='25' color="#d5691b" />
                     </Pressable>
                 </View>

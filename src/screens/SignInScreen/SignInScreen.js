@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { View, Text, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native'
+import { View, Image, StyleSheet, useWindowDimensions, ScrollView, Alert } from 'react-native'
 import Logo from '../../../assets/imgs/spclogo.png'
 import CustomButton from '../../components/CustomButton'
 import CustomInput from '../../components/CustomInput'
@@ -22,11 +22,17 @@ const SignInScreen = () => {
 
     const onSignInPressed = () => {
         var strurl = URLAPI + 'api/account.signin/' + username + "/" + password;
+
         axios.get(strurl)
             .then((res) => {
-                //console.log(res.data)
                 if (res.data === 'false::false') {
-                    console.warn('Datos Invalidos.');
+                    Alert.alert(
+                        "Datos Incorrectos",
+                        "Por favor revisa tus credenciales e intentalo nuevamente",
+                        [
+                          { text: "OK", onPress: () => console.log("OK Pressed") }
+                        ]
+                      );
                     setUsername('');
                     setPassword('')
                 } else {
@@ -40,9 +46,9 @@ const SignInScreen = () => {
                         ['ClientEmail', splitArr[3]],
                         ['IsActive', splitArr[4]]
                     ]);
-                    const obj = Object.fromEntries(entries);
-                    console.log('XXX: ' + JSON.stringify(obj))
-                    login(obj);
+                    const usr = Object.fromEntries(entries);
+                    //console.log('XXX: ' + JSON.stringify(usr))
+                    login(usr);
 
                     navigation.navigate('HomeScreen')
 
@@ -67,6 +73,8 @@ const SignInScreen = () => {
     const onRegisterPressed = () => {
         navigation.navigate('SignUpScreen')
     }
+
+   
 
     return (
         <ScrollView>

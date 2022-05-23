@@ -12,11 +12,7 @@ const Drawer = createDrawerNavigator();
 const HomeScreen = () =>{
 
 
-    const { user, login, logout } = React.useContext(UserContext);
-
-    console.log('HOLA '+JSON.stringify(user));
-    return    (<CustomWebView></CustomWebView>
-
-    )
+    
+    return    (<CustomWebView></CustomWebView>)
 }
 export default HomeScreen

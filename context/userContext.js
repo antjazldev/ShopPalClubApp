@@ -1,6 +1,5 @@
-// CounterContext.tsx
 import React from 'react';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useNavigation } from '@react-navigation/native'
 import { navRef } from '../src/navigation/navRef'
@@ -8,6 +7,18 @@ import { navRef } from '../src/navigation/navRef'
 
 //const navigation = useNavigation();
 // Declaring the state object globally.
+
+const storeData = async (userdata) => {
+  try {
+    const jsonValue = JSON.stringify(userdata)
+    await AsyncStorage.setItem('@user', jsonValue)
+    console.log('funciona');
+  } catch (e) {
+    // saving error
+  }
+}
+
+
 const initialUserState = {
   user: {},
 };
@@ -15,9 +26,10 @@ const initialUserState = {
 const userContextWrapper = (component) => ({
   ...initialUserState,
   login:  (usr) => {
-      console.log('MADE IT TO UC');
-      console.log(JSON.stringify(usr))
-      initialUserState.user = usr;
+     // console.log('MADE IT TO UC');
+     // console.log(JSON.stringify(usr))
+     storeData(usr); 
+     initialUserState.user = usr;
 
       component?.setState({ context: userContextWrapper(component) });
   },
