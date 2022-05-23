@@ -18,6 +18,16 @@ const storeData = async (userdata) => {
   }
 }
 
+const removeValue = async () => {
+  try {
+    await AsyncStorage.removeItem('@user')
+  } catch(e) {
+    // remove error
+  }
+
+  console.log('Done deleting user.')
+}
+
 
 const initialUserState = {
   user: {},
@@ -34,6 +44,7 @@ const userContextWrapper = (component) => ({
       component?.setState({ context: userContextWrapper(component) });
   },
   logout: () => {
+    removeValue();
     initialUserState.user = {};
     component?.setState({ context: userContextWrapper(component) });
   },

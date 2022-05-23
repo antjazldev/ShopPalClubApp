@@ -7,13 +7,19 @@ import { UserContext } from '../../../context/userContext';
 const CustomBrowser = ({ navigation, route }) => {
 
     const [mainUrl, setMainUrl] = useState(route.params.mainUrl);
+    const [logoutflag, setLogout] = useState(route.params.logout);
     const [canGoBack, setCanGoBack] = useState(false);
     const [canGoForward, setCanGoForward] = useState(false);
     const { user, login, logout } = React.useContext(UserContext);
+
+    if(logoutflag){
+        logout();
+    }
     
     state = {
         url: mainUrl,
-        key: 1
+        key: 1,
+        logoutflag
     };
 
     const [key, setKey] = useState(1);
